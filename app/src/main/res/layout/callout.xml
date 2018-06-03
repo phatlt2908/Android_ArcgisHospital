@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:text="Bệnh viện Chợ Rẫy"
+        android:textColor="#000"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:maxLines="1"
+        android:text="Địa chỉ"
+        android:textSize="12dp" />
+
+    <RatingBar
+        android:id="@+id/ratingBarScale"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:isIndicator="true"
+        android:numStars="3"
+        android:rating="1"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:stepSize="1"
+        android:theme="@style/RatingBar"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/txtScale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="6dp"
+        android:background="#888888"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/txtPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="6dp"
+        android:layout_gravity="center"
+        android:text="0123456789"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="05h30 - 22h30"
+        android:textColor="#000"
+        android:textSize="15dp" />
+
+
+    <TextView
+        android:id="@+id/txtSpectialist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Đa khoa"
+        android:textSize="12dp" />
+
+    <Button
+        android:id="@+id/btnGoHere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="Đi đến đây"
+        android:drawableLeft="@drawable/route"
+        android:drawablePadding="10dip"
+        android:paddingLeft="30dip"
+        android:paddingRight="30dip"
+        android:textColor="@color/colorAccent"
+        android:drawableStart="@drawable/route" />
+</LinearLayout>

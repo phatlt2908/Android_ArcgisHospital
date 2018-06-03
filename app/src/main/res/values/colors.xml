@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#789DC3</color>
+    <color name="colorPrimaryDark">#46709C</color>
+    <color name="colorAccent">#FF8C3E</color>
+    <color name="colorAccentLight">#FFCE79</color>
+    <color name="colorDark">#333333</color>
+    <color name="actionBarText">#FFFFFF</color>
+</resources>

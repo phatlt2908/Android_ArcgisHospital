@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tìm kiếm cấp cứu</string>
+    <string name="tooltip_btn_floating">Tìm bệnh viện gần nhất? Bấm vào đây</string>
+    <string name="service_url">https://services8.arcgis.com/a33UeUx2mKzlI040/arcgis/rest/services/hospital_manage/FeatureServer/0</string>
+    <string name="type_basemap_street">Street</string>
+    <string name="type_basemap_open_street_map">Open street map</string>
+    <string name="type_basemap_topographic">Topographic</string>
+    <string name="type_basemap_imagery">Imagery</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Tìm cơ sở y tế</string>
+    <string name="navigation_vector">http://www.arcgis.com/sharing/rest/content/items/dcbbba0edf094eaa81af19298b9c6247/resources/styles/root.json</string>
+    <string name="routing_service">http://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World</string>
+    <string name="routing_service_test">http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route</string>
+    <string name="arcgis_username">phatamao</string>
+    <string name="arcgis_password">let1enphat</string>
+</resources>

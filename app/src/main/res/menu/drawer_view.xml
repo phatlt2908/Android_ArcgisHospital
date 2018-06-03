@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_camera"
+        android:icon="@drawable/ic_location"
+        android:title="Import" />
+
+    <item android:title="Bản đồ">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_street"
+                    android:icon="@drawable/ic_location"
+                    android:title="@string/type_basemap_street" />
+                <item
+                    android:id="@+id/nav_open_street_map"
+                    android:icon="@drawable/ic_location"
+                    android:title="@string/type_basemap_open_street_map" />
+                <item
+                    android:id="@+id/nav_topographic"
+                    android:icon="@drawable/ic_location"
+                    android:title="@string/type_basemap_topographic" />
+                <item
+                    android:id="@+id/nav_imagery"
+                    android:icon="@drawable/ic_location"
+                    android:title="@string/type_basemap_imagery" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Khác">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_location"
+                    android:title="Cài đặt" />
+            </group>
+        </menu>
+    </item>
+
+</menu>
