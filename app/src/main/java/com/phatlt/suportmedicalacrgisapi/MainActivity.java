@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         Basemap basemap = new Basemap(mVectorTiledLayer);
 
         mMap = new ArcGISMap(basemap);
-//        mMap.setMinScale(500000);
+        mMap.setMinScale(500000);
         mMap.setMaxScale(2000);
         Viewpoint hcmPoint = new Viewpoint(10.823, 106.6297, 200000);
         mMap.setInitialViewpoint(hcmPoint);
@@ -291,6 +291,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mLocationDisplay.startAsync();
+
         addEvents();
     }
 
@@ -345,7 +347,6 @@ public class MainActivity extends AppCompatActivity {
         btnGoHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLocationDisplay.startAsync();
                 final Point st1 = mLocationDisplay.getMapLocation();
                 final Point st2 = new Point(stopLong, stopLati, SpatialReferences.getWgs84());
                 searchRoute(st1, st2);
@@ -383,7 +384,6 @@ public class MainActivity extends AppCompatActivity {
         btnSearchHospital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLocationDisplay.startAsync();
                 Point st1 = mLocationDisplay.getMapLocation();
                 Point st2 = new Point(106.619568, 10.779686, SpatialReferences.getWgs84());
                 searchRoute(st1, st2);
