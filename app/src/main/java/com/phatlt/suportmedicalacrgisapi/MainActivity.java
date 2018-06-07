@@ -213,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 featureLayer.clearSelection();
                 mSelectedArcGISFeature = null;
                 mCallout.dismiss();
+                progressBar.setVisibility(View.VISIBLE);
 
                 final ListenableFuture<IdentifyLayerResult> identifyFuture = mMapView
                         .identifyLayerAsync(featureLayer, mClickPoint, 5, false, 1);
@@ -235,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             Log.e(TAG, "Select feature failed: " + e.getMessage());
                         }
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
                 return super.onSingleTapConfirmed(e);
@@ -311,6 +313,10 @@ public class MainActivity extends AppCompatActivity {
         txtAddress.setText(data.getAttributes().get("address").toString());
         txtPhone.setText(data.getAttributes().get("phone").toString());
         txtTime.setText(data.getAttributes().get("open_time").toString() + " - " + data.getAttributes().get("close_time").toString());
+
+        final Double stopLong = Double.parseDouble(data.getAttributes().get("longitude").toString());
+        final Double stopLati = Double.parseDouble(data.getAttributes().get("latitude").toString());
+
         switch (data.getAttributes().get("scale").toString()) {
             case "1":
                 txtScale.setText("Nhỏ");
@@ -335,10 +341,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + data.getAttributes().get("phone").toString())));
             }
         });
+
         btnGoHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mLocationDisplay.startAsync();
+                final Point st1 = mLocationDisplay.getMapLocation();
+                final Point st2 = new Point(stopLong, stopLati, SpatialReferences.getWgs84());
+                searchRoute(st1, st2);
             }
         });
 
@@ -364,25 +374,7 @@ public class MainActivity extends AppCompatActivity {
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (mLocationDisplay.getAutoPanMode().toString()) {
-                    case "NAVIGATION":
-                        mLocationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.RECENTER);
-                        mLocationDisplay.startAsync();
-                        break;
-                    case "RECENTER":
-                        mLocationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.COMPASS_NAVIGATION);
-                        mLocationDisplay.startAsync();
-                        break;
-                    case "COMPASS_NAVIGATION":
-                        mLocationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.NAVIGATION);
-                        mLocationDisplay.startAsync();
-                        break;
-                    default:
-                        mLocationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.RECENTER);
-                        mLocationDisplay.startAsync();
-                        break;
-                }
-                Toast.makeText(MainActivity.this, Double.toString(mMapView.getLocationDisplay().getMapLocation().getX()), Toast.LENGTH_SHORT).show();
+                getLocation();
             }
         });
 
@@ -391,75 +383,33 @@ public class MainActivity extends AppCompatActivity {
         btnSearchHospital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-
-                mRouteTask = new RouteTask(MainActivity.this, getString(R.string.routing_service));
-                UserCredential userCredential =
-                        new UserCredential("phatamao","let1enphat");
-                userCredential.createFromToken("v8ApRsluRdBqyC_D5-qBdjZb8XfMgbwocX45Ndzwu5cDiOpAb2PLbpKfanSMxnrgAHLe6jaYZlYz0lcK3qp3DKu4Xg44Wyxr529seoYuZ5yDcgZDhvUiAoar_TEfkaOXXI1ghRHUO8LQKF0VGntg6A..", "krLJZ0oK3aWfgjD2");
-                mRouteTask.setCredential(userCredential);
-                mRouteTask.loadAsync();
-                mRouteTask.addDoneLoadingListener(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mRouteTask.getLoadError() == null && mRouteTask.getLoadStatus() == LoadStatus.LOADED) {
-                            Toast.makeText(MainActivity.this, "routeTask loaded", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(MainActivity.this, "routeTask fail loaded", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                final ListenableFuture<RouteParameters> listenableFuture = mRouteTask.createDefaultParametersAsync();
-                listenableFuture.addDoneListener(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            if (listenableFuture.isDone()) {
-                                int i = 0;
-                                mRouteParams = listenableFuture.get();
-                                mRouteParams.setReturnStops(true);
-                                mRouteParams.setReturnDirections(true);
-
-//                                Point st1 = new Point(-13041171.537945, 3870988.271378, SpatialReferences.getWebMercator());
-//                                Point st2 = new Point(-13041693.562570, 3856006.859684, SpatialReferences.getWebMercator());
-
-                                Point st1 = new Point(11868683.129952, 1212597.016716, SpatialReferences.getWebMercator());
-                                Point st2 = new Point(11872352.107310, 1208775.165302, SpatialReferences.getWebMercator());
-
-                                Stop stop1 = new Stop(st1);
-                                Stop stop2 = new Stop(st2);
-
-                                List<Stop> routeStops = new ArrayList<>();
-
-                                routeStops.add(stop1);
-                                routeStops.add(stop2);
-                                mRouteParams.setStops(routeStops);
-
-                                try {
-                                    RouteResult result = mRouteTask.solveRouteAsync(mRouteParams).get();
-                                    List routes = result.getRoutes();
-                                    mRoute = (Route) routes.get(0);
-                                    // create a route graphic
-                                    Graphic routeGraphic = new Graphic(mRoute.getRouteGeometry(), mRouteSymbol);
-                                    mGraphicsOverlay.getGraphics().add(routeGraphic);
-                                    // get directions
-                                    List<DirectionManeuver> directions = mRoute.getDirectionManeuvers();
-                                    String[] directionsArray = new String[directions.size()];
-                                    for (DirectionManeuver dm : directions) {
-                                        directionsArray[i++] = dm.getDirectionText();
-                                    }
-                                    Toast.makeText(MainActivity.this, directionsArray[3].toString(), Toast.LENGTH_LONG).show();
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        } catch (Exception e) {
-                            Log.e(TAG, e.getMessage());
-                        }
-                    }
-                });
+                mLocationDisplay.startAsync();
+                Point st1 = mLocationDisplay.getMapLocation();
+                Point st2 = new Point(106.619568, 10.779686, SpatialReferences.getWgs84());
+                searchRoute(st1, st2);
             }
         });
+    }
+
+    private void getLocation() {
+        switch (mLocationDisplay.getAutoPanMode().toString()) {
+            case "NAVIGATION":
+                mLocationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.RECENTER);
+                mLocationDisplay.startAsync();
+                break;
+            case "RECENTER":
+                mLocationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.COMPASS_NAVIGATION);
+                mLocationDisplay.startAsync();
+                break;
+            case "COMPASS_NAVIGATION":
+                mLocationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.NAVIGATION);
+                mLocationDisplay.startAsync();
+                break;
+            default:
+                mLocationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.RECENTER);
+                mLocationDisplay.startAsync();
+                break;
+        }
     }
 
     private void setupSymbols() {
@@ -584,5 +534,69 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    public void searchRoute(final Point st1, final Point st2) {
+        progressBar.setVisibility(View.VISIBLE);
+
+        mRouteTask = new RouteTask(MainActivity.this, getString(R.string.routing_service));
+        UserCredential userCredential =
+                new UserCredential("phatamao", "let1enphat");
+        userCredential.createFromToken("v8ApRsluRdBqyC_D5-qBdjZb8XfMgbwocX45Ndzwu5cDiOpAb2PLbpKfanSMxnrgAHLe6jaYZlYz0lcK3qp3DKu4Xg44Wyxr529seoYuZ5yDcgZDhvUiAoar_TEfkaOXXI1ghRHUO8LQKF0VGntg6A..", "krLJZ0oK3aWfgjD2");
+        mRouteTask.setCredential(userCredential);
+        mRouteTask.loadAsync();
+        mRouteTask.addDoneLoadingListener(new Runnable() {
+            @Override
+            public void run() {
+                if (mRouteTask.getLoadError() == null && mRouteTask.getLoadStatus() == LoadStatus.LOADED) {
+                    Toast.makeText(MainActivity.this, "routeTask loaded", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "routeTask fail loaded", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        final ListenableFuture<RouteParameters> listenableFuture = mRouteTask.createDefaultParametersAsync();
+        listenableFuture.addDoneListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (listenableFuture.isDone()) {
+                        int i = 0;
+                        mRouteParams = listenableFuture.get();
+                        mRouteParams.setReturnStops(true);
+                        mRouteParams.setReturnDirections(true);
+
+                        Stop stop1 = new Stop(st1);
+                        Stop stop2 = new Stop(st2);
+
+                        List<Stop> routeStops = new ArrayList<>();
+
+                        routeStops.add(stop1);
+                        routeStops.add(stop2);
+                        mRouteParams.setStops(routeStops);
+
+                        try {
+                            RouteResult result = mRouteTask.solveRouteAsync(mRouteParams).get();
+                            List routes = result.getRoutes();
+                            mRoute = (Route) routes.get(0);
+                            // create a route graphic
+                            Graphic routeGraphic = new Graphic(mRoute.getRouteGeometry(), mRouteSymbol);
+                            mGraphicsOverlay.getGraphics().add(routeGraphic);
+                            // get directions
+                            List<DirectionManeuver> directions = mRoute.getDirectionManeuvers();
+                            String[] directionsArray = new String[directions.size()];
+                            for (DirectionManeuver dm : directions) {
+                                directionsArray[i++] = dm.getDirectionText();
+                            }
+                            Toast.makeText(MainActivity.this, directionsArray[3].toString(), Toast.LENGTH_LONG).show();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        });
     }
 }
