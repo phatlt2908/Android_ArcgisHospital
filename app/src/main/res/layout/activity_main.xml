@@ -115,7 +115,16 @@
                         app:fab_colorRipple="#99FFFFFF"
                         fab:fab_label="Tìm kiếm cơ sở y tế"
                         fab:fab_size="mini" />
-
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/btnFeedBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_search_hospital"
+                        app:fab_colorNormal="#207245"
+                        app:fab_colorPressed="#558F6E"
+                        app:fab_colorRipple="#99FFFFFF"
+                        fab:fab_label="Gop Y"
+                        fab:fab_size="mini" />
                 </com.github.clans.fab.FloatingActionMenu>
 
             </RelativeLayout>

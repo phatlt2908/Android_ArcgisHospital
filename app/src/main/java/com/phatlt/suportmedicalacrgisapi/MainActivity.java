@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private int requestCode = 2;
     String[] reqPermissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission
             .ACCESS_COARSE_LOCATION};
-    private FloatingActionButton btnLocation, btnSearchHospital;
+    private FloatingActionButton btnLocation, btnSearchHospital, btnFeedBack;
 
     private DrawerLayout mDrawerLayout;
 
@@ -389,6 +389,14 @@ public class MainActivity extends AppCompatActivity {
                 searchRoute(st1, st2);
             }
         });
+        
+        btnFeedBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,FeedBack.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getLocation() {
@@ -485,6 +493,7 @@ public class MainActivity extends AppCompatActivity {
         btnLocation = findViewById(R.id.btnLocation);
         btnSearchHospital = findViewById(R.id.btnSearchHospital);
         progressBar = findViewById(R.id.progressBar);
+        btnFeedBack =  findViewById(R.id.btnFeedBack);
     }
 
     @Override
