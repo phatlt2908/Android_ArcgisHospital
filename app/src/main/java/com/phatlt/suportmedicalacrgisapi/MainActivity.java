@@ -110,11 +110,16 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
+    UserCredential userCredential =
+            new UserCredential("phatamao", "let1enphat");
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        userCredential.createFromToken(getString(R.string.token), "krLJZ0oK3aWfgjD2");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -149,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
                                 case R.id.nav_imagery:
                                     mMap.setBasemap(Basemap.createImagery());
                                     break;
+                                case R.id.nav_feedBack:
+                                    Intent intent = new Intent(MainActivity.this, FeedBack.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                    MainActivity.this.startActivity(intent);
                             }
                         }
                         mDrawerLayout.closeDrawers();
@@ -367,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
             // Show tooltip here
 
             sharedPreferences.edit().putBoolean("firstrun", false).apply();
-            Toast.makeText(MainActivity.this, "The fist run", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "The first run", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -540,9 +549,6 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         mRouteTask = new RouteTask(MainActivity.this, getString(R.string.routing_service));
-        UserCredential userCredential =
-                new UserCredential("phatamao", "let1enphat");
-        userCredential.createFromToken("v8ApRsluRdBqyC_D5-qBdjZb8XfMgbwocX45Ndzwu5cDiOpAb2PLbpKfanSMxnrgAHLe6jaYZlYz0lcK3qp3DKu4Xg44Wyxr529seoYuZ5yDcgZDhvUiAoar_TEfkaOXXI1ghRHUO8LQKF0VGntg6A..", "krLJZ0oK3aWfgjD2");
         mRouteTask.setCredential(userCredential);
         mRouteTask.loadAsync();
         mRouteTask.addDoneLoadingListener(new Runnable() {

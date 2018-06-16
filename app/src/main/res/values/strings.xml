@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tìm kiếm cấp cứu</string>
+    <string name="app_name">Cấp cứu</string>
     <string name="tooltip_btn_floating">Tìm bệnh viện gần nhất? Bấm vào đây</string>
     <string name="service_url">https://services8.arcgis.com/a33UeUx2mKzlI040/arcgis/rest/services/hospital_manage/FeatureServer/0</string>
     <string name="type_basemap_street">Street</string>
@@ -13,4 +13,6 @@
     <string name="routing_service_test">http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route</string>
     <string name="arcgis_username">phatamao</string>
     <string name="arcgis_password">let1enphat</string>
+    <string name="token">v8ApRsluRdBqyC_D5-qBdjZb8XfMgbwocX45Ndzwu5cDiOpAb2PLbpKfanSMxnrgAHLe6jaYZlYz0lcK3qp3DKu4Xg44Wyxr529seoYuZ5yDcgZDhvUiAoar_TEfkaOXXI1ghRHUO8LQKF0VGntg6A..</string>
+    <string name="fdbk_dript">Cảm ơn bạn đã gửi phản hồi đến chúng tôi! Các thông tin bị thiếu và sai sót được gửi từ bạn sẽ góp phần làm ứng dụng của chúng tôi tốt và chính xác hơn.\nMọi thông tin đều KHÔNG bắt buộc</string>
 </resources>
