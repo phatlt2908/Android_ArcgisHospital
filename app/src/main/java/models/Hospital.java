@@ -2,7 +2,7 @@ package models;
 
 import java.util.Date;
 
-public class hospital {
+public class Hospital {
     private String hosId;
     private Double latitude;
     private Double longitude;
@@ -94,10 +94,10 @@ public class hospital {
         this.spectialist = spectialist;
     }
 
-    public hospital() {
+    public Hospital() {
     }
 
-    public hospital(String hosId, Double latitude, Double longitude, String name, String address, Date openTime, Date closeTime, String phone, Integer scale, String spectialist) {
+    public Hospital(String hosId, Double latitude, Double longitude, String name, String address, Date openTime, Date closeTime, String phone, Integer scale, String spectialist) {
         this.hosId = hosId;
         this.latitude = latitude;
         this.longitude = longitude;

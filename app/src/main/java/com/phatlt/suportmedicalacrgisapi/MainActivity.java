@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                                     mMap.setBasemap(Basemap.createImagery());
                                     break;
                                 case R.id.nav_feedBack:
-                                    Intent intent = new Intent(MainActivity.this, FeedBack.class);
+                                    Intent intent = new Intent(MainActivity.this, FeedBackActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                     MainActivity.this.startActivity(intent);
                             }

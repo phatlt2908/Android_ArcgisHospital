@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FeedBack"
+            android:name=".FeedBackActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
