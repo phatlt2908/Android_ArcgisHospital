@@ -13,19 +13,19 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_street"
-                    android:icon="@drawable/ic_location"
+                    android:icon="@drawable/ic_streetview"
                     android:title="@string/type_basemap_street" />
                 <item
                     android:id="@+id/nav_open_street_map"
-                    android:icon="@drawable/ic_location"
+                    android:icon="@drawable/ic_streetview"
                     android:title="@string/type_basemap_open_street_map" />
                 <item
                     android:id="@+id/nav_topographic"
-                    android:icon="@drawable/ic_location"
+                    android:icon="@drawable/ic_simple"
                     android:title="@string/type_basemap_topographic" />
                 <item
                     android:id="@+id/nav_imagery"
-                    android:icon="@drawable/ic_location"
+                    android:icon="@drawable/ic_map"
                     android:title="@string/type_basemap_imagery" />
             </group>
         </menu>
@@ -40,7 +40,7 @@
                     android:title="Gửi phản hồi" />
                 <item
                     android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_location"
+                    android:icon="@drawable/ic_settings"
                     android:title="Cài đặt" />
             </group>
         </menu>
