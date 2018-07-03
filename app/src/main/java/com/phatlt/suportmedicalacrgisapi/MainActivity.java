@@ -105,13 +105,15 @@ public class MainActivity extends AppCompatActivity {
     private GraphicsOverlay mGraphicsOverlay;
     private Point mSourcePoint;
     private Point mDestinationPoint;
-    ListView routeList;
-    LinearLayout dragView;
 
     private ProgressBar progressBar;
 
     UserCredential userCredential =
             new UserCredential("phatamao", "let1enphat");
+
+    private ListView lvDirection;
+    private TextView txtTotalTime, txtTotalLength;
+    private LinearLayout dragView;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -494,6 +496,10 @@ public class MainActivity extends AppCompatActivity {
         btnLocation = findViewById(R.id.btnLocation);
         btnSearchHospital = findViewById(R.id.btnSearchHospital);
         progressBar = findViewById(R.id.progressBar);
+        lvDirection = findViewById(R.id.lvDirection);
+        txtTotalTime = findViewById(R.id.txtTotalTime);
+        txtTotalLength = findViewById(R.id.txtTotalLength);
+        dragView = findViewById(R.id.dragView);
     }
 
     @Override
@@ -594,7 +600,19 @@ public class MainActivity extends AppCompatActivity {
                             for (DirectionManeuver dm : directions) {
                                 directionsArray[i++] = dm.getDirectionText();
                             }
-                            Toast.makeText(MainActivity.this, directionsArray[3].toString(), Toast.LENGTH_LONG).show();
+
+                            ArrayAdapter directionAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, directionsArray);
+                            lvDirection.setAdapter(directionAdapter);
+
+                            txtTotalTime.setText(String.valueOf(Math.round(Math.round(mRoute.getTotalTime()))) + " phút");
+                            if (mRoute.getTotalLength() < 1000) {
+                                txtTotalLength.setText("(" + String.valueOf(Math.round(mRoute.getTotalLength())) + "m)");
+                            } else if (mRoute.getTotalLength() < 5000) {
+                                txtTotalLength.setText("(" + String.valueOf(Math.round(mRoute.getTotalLength() / 1000.0 * 10) / 10.0) + " km)");
+                            } else {
+                                txtTotalLength.setText("(" + String.valueOf(Math.round(mRoute.getTotalLength() / 1000)) + " km)");
+                            }
+
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
