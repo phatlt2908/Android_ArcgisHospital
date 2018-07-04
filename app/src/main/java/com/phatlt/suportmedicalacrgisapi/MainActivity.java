@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView lvDirection;
     private TextView txtTotalTime, txtTotalLength;
-    private LinearLayout dragView;
+    private SlidingUpPanelLayout slidingLayout;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -499,7 +499,9 @@ public class MainActivity extends AppCompatActivity {
         lvDirection = findViewById(R.id.lvDirection);
         txtTotalTime = findViewById(R.id.txtTotalTime);
         txtTotalLength = findViewById(R.id.txtTotalLength);
-        dragView = findViewById(R.id.dragView);
+        // Set panel hidden when create app
+        slidingLayout = findViewById(R.id.sliding_layout);
+        slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
     }
 
     @Override
@@ -611,6 +613,10 @@ public class MainActivity extends AppCompatActivity {
                                 txtTotalLength.setText("(" + String.valueOf(Math.round(mRoute.getTotalLength() / 1000.0 * 10) / 10.0) + " km)");
                             } else {
                                 txtTotalLength.setText("(" + String.valueOf(Math.round(mRoute.getTotalLength() / 1000)) + " km)");
+                            }
+
+                            if (slidingLayout.getPanelState() != SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                                slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                             }
 
                         } catch (Exception ex) {
