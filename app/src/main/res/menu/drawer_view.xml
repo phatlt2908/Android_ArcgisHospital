@@ -3,11 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item
-        android:id="@+id/nav_camera"
-        android:icon="@drawable/ic_location"
-        android:title="Import" />
-
     <item android:title="Bản đồ">
         <menu>
             <group android:checkableBehavior="single">

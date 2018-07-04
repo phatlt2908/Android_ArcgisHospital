@@ -113,7 +113,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView lvDirection;
     private TextView txtTotalTime, txtTotalLength;
-    private LinearLayout dragView;
+    private SlidingUpPanelLayout slidingLayout;
+
+    private Graphic routeGraphic;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -141,9 +143,6 @@ public class MainActivity extends AppCompatActivity {
                         int id = menuItem.getItemId();
                         if (!menuItem.isChecked()) {
                             switch (id) {
-                                case R.id.nav_camera:
-                                    // Handle the camera action
-                                    break;
                                 case R.id.nav_street:
                                     mMap.setBasemap(Basemap.createStreets());
                                     break;
@@ -499,7 +498,9 @@ public class MainActivity extends AppCompatActivity {
         lvDirection = findViewById(R.id.lvDirection);
         txtTotalTime = findViewById(R.id.txtTotalTime);
         txtTotalLength = findViewById(R.id.txtTotalLength);
-        dragView = findViewById(R.id.dragView);
+        // Set panel hidden when create app
+        slidingLayout = findViewById(R.id.sliding_layout);
+        slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
     }
 
     @Override
@@ -548,7 +549,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (routeGraphic != null) {
+            mGraphicsOverlay.getGraphics().remove();
+        }
+
+        if (slidingLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN) {
+            slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        }
+
     }
 
     public void searchRoute(final Point st1, final Point st2) {
@@ -592,7 +600,7 @@ public class MainActivity extends AppCompatActivity {
                             List routes = result.getRoutes();
                             mRoute = (Route) routes.get(0);
                             // create a route graphic
-                            Graphic routeGraphic = new Graphic(mRoute.getRouteGeometry(), mRouteSymbol);
+                            routeGraphic = new Graphic(mRoute.getRouteGeometry(), mRouteSymbol);
                             mGraphicsOverlay.getGraphics().add(routeGraphic);
                             // get directions
                             List<DirectionManeuver> directions = mRoute.getDirectionManeuvers();
@@ -611,6 +619,10 @@ public class MainActivity extends AppCompatActivity {
                                 txtTotalLength.setText("(" + String.valueOf(Math.round(mRoute.getTotalLength() / 1000.0 * 10) / 10.0) + " km)");
                             } else {
                                 txtTotalLength.setText("(" + String.valueOf(Math.round(mRoute.getTotalLength() / 1000)) + " km)");
+                            }
+
+                            if (slidingLayout.getPanelState() != SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                                slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                             }
 
                         } catch (Exception ex) {
