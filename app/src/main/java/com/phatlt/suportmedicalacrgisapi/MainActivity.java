@@ -395,7 +395,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Point st1 = mLocationDisplay.getMapLocation();
-                Point st2 = new Point(106.619568, 10.779686, SpatialReferences.getWgs84());
+                Point st2 = new Point(106.807506, 10.878007, SpatialReferences.getWgs84());
                 searchRoute(st1, st2);
             }
         });
@@ -549,9 +549,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (routeGraphic != null) {
-            mGraphicsOverlay.getGraphics().remove();
-        }
+//        if (routeGraphic != null) {
+//            mGraphicsOverlay.getGraphics().remove();
+//        }
 
         if (slidingLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN) {
             slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);

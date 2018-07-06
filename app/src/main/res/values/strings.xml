@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Cấp cứu</string>
     <string name="tooltip_btn_floating">Tìm bệnh viện gần nhất? Bấm vào đây</string>
-    <string name="service_url">https://services8.arcgis.com/a33UeUx2mKzlI040/arcgis/rest/services/hospital_manage/FeatureServer/0</string>
+    <string name="service_url">https://services8.arcgis.com/a33UeUx2mKzlI040/arcgis/rest/services/hospital_manage_02/FeatureServer/0</string>
     <string name="type_basemap_street">Đường phố</string>
     <string name="type_basemap_open_street_map">Đường phố mở rộng</string>
     <string name="type_basemap_topographic">Đơn giản</string>
